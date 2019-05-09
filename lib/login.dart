@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 
 import 'package:icms_app/stacked_icons.dart';
+import 'package:icms_app/constants.dart';
 import 'package:icms_app/home.dart';
 
 class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
-        iconTheme: IconThemeData(color: Color(0xFFAF0000)),
-      ),
+      // appBar: AppBar(
+      //   backgroundColor: Colors.transparent,
+      //   elevation: 0.0,
+      //   iconTheme: IconThemeData(color: cred),
+      // ),
       body: ListView(
         children: <Widget>[
           Container(
@@ -19,6 +20,9 @@ class LoginPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
+                SizedBox(
+                  height: 60.0,
+                ),
                 StackedIcons(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -68,7 +72,7 @@ class LoginPage extends StatelessWidget {
                             alignment: Alignment.center,
                             height: 60.0,
                             decoration: BoxDecoration(
-                                color: Color(0xFFAF0000),
+                                color: cred,
                                 borderRadius: BorderRadius.circular(10.0)),
                             child: Text(
                               "Sign In",
@@ -97,7 +101,7 @@ class LoginPage extends StatelessWidget {
                             child: Text(
                               "Forgot Password",
                               style: TextStyle(
-                                  fontSize: 17.0, color: Color(0xFFAF0000)),
+                                  fontSize: 17.0, color: cred),
                             ),
                           ),
                         ),
