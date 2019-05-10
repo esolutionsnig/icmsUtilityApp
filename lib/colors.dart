@@ -1,0 +1,20 @@
+import 'package:flutter/material.dart';
+
+const cred = Color(0xFFAF0000);
+const cteal = Color(0xFF00838f);
+const cpurple = Color(0xFF6a1b9a);
+const cgrey = Color(0xFF37474f);
+const corange = Color(0xFFbf360c);
+const clime = Color(0xFF827717);
+const cpink = Color(0xFF880e4f);
+const cblue = Color(0xFF0d47a1);
+const ccyan = Color(0xFF0097a7);
+const cgreen = Color(0xFF2e7d32);
+const cyellow = Color(0xFFf9a825);
+const camber = Color(0xFFff8f00);
+const cbrown = Color(0xFF3e2723);
+const cbluegrey = Color(0xFF37474f);
+const cbluegreyl4 = Color(0xFFeceff1);
+const cwhite = Color(0xFFFFFFFF);
+const cblack = Color(0xFF000000);
+const cblack87 = Color(0xFFde000000);

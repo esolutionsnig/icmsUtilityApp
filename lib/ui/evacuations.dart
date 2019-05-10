@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:icms_app/constants.dart';
+
+import 'package:icms_app/colors.dart';
+import 'package:icms_app/ui/bottom_navbar.dart';
 
 class EvacuationPage extends StatefulWidget {
   @override
@@ -66,7 +69,10 @@ class MainContent extends StatelessWidget {
           if (snapshot.data == null) {
             return Container(
               child: Center(
-                child: Text("Loading..."),
+                child: SpinKitRipple(
+                  color: cred,
+                  size: 60.0,
+                ),
               ),
             );
           } else {

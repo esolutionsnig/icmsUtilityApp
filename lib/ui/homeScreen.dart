@@ -1,21 +1,158 @@
-import 'package:flutter/material.dart';
-import 'package:icms_app/constants.dart';
-import 'package:icms_app/evacuations.dart';
+import 'dart:async';
 
-class HomePage extends StatefulWidget {
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:icms_app/colors.dart';
+import 'package:icms_app/ui/bottom_navbar.dart';
+// import 'package:icms_app/marketers_screen.dart';
+import 'package:icms_app/repository/user_repository.dart';
+import 'package:icms_app/ui/evacuations.dart';
+import 'package:icms_app/utils/pref_utils.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+// import 'merchant_list_screen.dart';
+// import 'register_screen.dart';
+
+class HomeScreen extends StatefulWidget {
+  static final String routeName = "home";
   @override
-  _HomePageState createState() => _HomePageState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomeScreenState extends State<HomeScreen> {
+  //Aug Implementation
+  // Timer _timer;
+
+  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  SharedPreferences _sharedPreferences;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  String appBarTitle = "Dashboard";
+  Widget currentScreen;
+
+  String merchantListTitle = "Merchant List";
+  String registerMerchantTitle = "Register Merchant";
+  String marketersTitle = "Marketers";
+
+  List<String> userRoles;
+
+  @override
+  void initState() {
+    _fetchPrefs();
+  }
+
+  _fetchPrefs() async {
+    _sharedPreferences = await _prefs;
+    String roles = PreferenceUtils.getRoles(_sharedPreferences);
+    if (roles != null) {
+      setState(() {
+        userRoles = roles.split(",");
+      });
+    }
+  }
+
+  Future<Null> _logOutDialog() async {
+    return showDialog<Null>(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'SIGN OUT',
+            style: TextStyle(color: cred),
+          ),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Would you like to sign out from ICMS Cash Processing Center Utility App?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Yes'),
+              onPressed: () {
+                Navigator.of(context).pop();
+                UserRepository.logOut(context, _sharedPreferences);
+              },
+            ),
+            FlatButton(
+              child: Text('No'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<Null> _logOutDialogIOS() async {
+    return showDialog<Null>(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return CupertinoAlertDialog(
+          title: Text(
+            'SIGN OUT',
+            style: TextStyle(color: cred),
+          ),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(
+                    'Would you like to sign out from ICMS Cash Processing Center Utility App?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Yes'),
+              onPressed: () {
+                Navigator.of(context).pop();
+                UserRepository.logOut(context, _sharedPreferences);
+              },
+            ),
+            FlatButton(
+              child: Text('No'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    // Log Out After 24 Hours
+    // _timer = Timer(const Duration(milliseconds: 86400000), () {
+    //   setState(() {
+    //     UserRepository.logOut(context, _sharedPreferences);
+    //   });
+    // });
+
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.settings_power),
+        onPressed: () {
+          if (Theme.of(context).platform == TargetPlatform.iOS) {
+            _logOutDialogIOS();
+          } else {
+            _logOutDialog();
+          }
+        },
+        backgroundColor: cred,
+      ),
       bottomNavigationBar: BottomNavBar(),
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
-        iconTheme: IconThemeData(color: cred),
+        backgroundColor: cred,
+        elevation: 6.0,
+        title: Text(appBarTitle, style: TextStyle(color: cwhite)),
       ),
       body: MainContent(),
     );
@@ -27,24 +164,8 @@ class MainContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0),
-          child: Container(
-            child: Column(
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Text(
-                      "Dashboard",
-                      style: TextStyle(fontSize: 24.0),
-                      textAlign: TextAlign.left,
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10.0),
-              ],
-            ),
-          ),
+        SizedBox(
+          height: 30.0,
         ),
         GestureDetector(
           onTap: () {

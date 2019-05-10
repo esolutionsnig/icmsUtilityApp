@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
 import 'package:flutter/services.dart';
-import 'package:icms_app/constants.dart';
-import 'package:icms_app/login.dart';
+import 'package:icms_app/colors.dart';
+import 'dart:async';
 
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:icms_app/ui/loginScreen.dart';
 
 class SplashPage extends StatefulWidget {
   @override
@@ -13,12 +13,18 @@ class SplashPage extends StatefulWidget {
 
 class SplashPageState extends State<SplashPage> {
   void navigationToNextPage() {
-    Navigator.pushNamed(context, '/LoginPage');
-    // Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage(),));
+    SystemChannels.textInput.invokeMethod('TextInput.hide');
+    Navigator.push(
+      context, 
+      MaterialPageRoute(
+        builder: (BuildContext context) => LoginScreen()
+      )
+    );
+    // Navigator.pushNamed(context, '/LoginScreen');
   }
 
   startSplashScreenTimer() async {
-    var _duration = new Duration(seconds: 10);
+    var _duration = new Duration(seconds: 6);
     return new Timer(_duration, navigationToNextPage);
   }
 
@@ -30,7 +36,7 @@ class SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-     return Scaffold(
+    return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -104,11 +110,10 @@ class SplashPageState extends State<SplashPage> {
             Row(
               children: <Widget>[
                 Expanded(
-                  child: SpinKitRipple(
-                    color: cred,
-                    size: 60.0,
-                  )
-                )
+                    child: SpinKitRipple(
+                  color: cred,
+                  size: 60.0,
+                ))
               ],
             )
           ],
